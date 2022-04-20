@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Dream, DreamType } from "../models/Dream";
 import { useDispatch } from "react-redux";
-import { add } from "../reducers/dreamSlice";
+import { add, update } from "../reducers/dreamSlice";
 
 export default function DreamForm({ dream }: { dream?: Dream }) {
   const [title, setTitle] = useState(dream ? dream.title : "");
@@ -17,7 +17,11 @@ export default function DreamForm({ dream }: { dream?: Dream }) {
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(add({ title, description, date, type }));
+    if (dream?.id) {
+      dispatch(update({ id: dream.id!, title, description, date, type }));
+    } else {
+      dispatch(add({ title, description, date, type }));
+    }
   }
 
   return (
