@@ -6,7 +6,7 @@ export enum DreamType {
 }
 
 export type Dream = {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   date: string;

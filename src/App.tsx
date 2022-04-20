@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import DreamsEditPage from './pages/DreamsEditPage';
 import DreamsNewPage from './pages/DreamsNewPage';
@@ -16,12 +17,14 @@ function App() {
         <Link className="nav-link" to="/dreams/new">New dream</Link>
       </Nav>
 
-      <Routes>
-        <Route path="/" element={<DreamsPage />} />
-        <Route path="/dreams/new" element={<DreamsNewPage />} />
-        <Route path="/dreams/:id/edit" element={<DreamsEditPage />} />
-        <Route path="/dreams/:id/show" element={<DreamShowsPage />} />
-      </Routes>
+      <main className="container-fluid">
+        <Routes>
+          <Route path="/" element={<DreamsPage />} />
+          <Route path="/dreams/new" element={<DreamsNewPage />} />
+          <Route path="/dreams/:id/edit" element={<DreamsEditPage />} />
+          <Route path="/dreams/:id/show" element={<DreamShowsPage />} />
+        </Routes>
+      </main>
     </div>
   );
 }
