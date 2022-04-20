@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Dream } from "../models/Dream";
+import { Dream, DreamType } from "../models/Dream";
 import { RootState } from "../store";
 import { remove } from "../reducers/dreamSlice";
 import { useDispatch } from "react-redux";
@@ -40,9 +40,9 @@ export default function DreamsPage() {
                 <td>{dream.title}</td>
                 <td>{dream.description}</td>
                 <td>{dream.date}</td>
-                <td>{dream.type}</td>
+                <td>{DreamType[dream.type]}</td>
                 <td>
-                  <Link to={`/dreams/${dream.id}/edit`} className="button-primary">Edit</Link>
+                  <Link to={`/dreams/${dream.id}/edit`} className="btn btn-primary mx-2">Edit</Link>
                   <Button variant="danger" onClick={event => deleteDream(event, dream.id)}>Delete</Button>
                 </td>
               </tr>
