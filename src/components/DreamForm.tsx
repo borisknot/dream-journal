@@ -7,6 +7,7 @@ import { Dream, DreamType } from "../models/Dream";
 import { useDispatch } from "react-redux";
 import { add, update } from "../reducers/dreamSlice";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function DreamForm({ dream }: { dream?: Dream }) {
   const [title, setTitle] = useState(dream ? dream.title : "");
@@ -20,6 +21,8 @@ export default function DreamForm({ dream }: { dream?: Dream }) {
   const [descriptionValid, setDescriptionValid] = useState(true);
   const [dateValid, setDateValid] = useState(true);
   const [typeValid, setTypeValid] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTitleValid(title !== "");
@@ -46,6 +49,8 @@ export default function DreamForm({ dream }: { dream?: Dream }) {
     } else {
       dispatch(add({ title, description, date, type }));
     }
+
+    navigate("/");
   }
 
   return (
