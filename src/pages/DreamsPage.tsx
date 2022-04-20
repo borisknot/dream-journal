@@ -1,12 +1,21 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Dream } from "../models/Dream";
 import { RootState } from "../store";
+import { remove } from "../reducers/dreamSlice";
+import { useDispatch } from "react-redux";
 
 export default function DreamsPage() {
   const dreams = useSelector<RootState, Dream[]>(state => state.dreamReducer.dreams);
+  const dispatch = useDispatch();
+
+  const deleteDream = (event: React.FormEvent<HTMLButtonElement>, id?: number) => {
+    if (!id) return;
+    dispatch(remove({ id }));
+  }
 
   return (
     <div>
@@ -33,6 +42,7 @@ export default function DreamsPage() {
                 <td>{dream.type}</td>
                 <td>
                   <Link to={`/dreams/${dream.id}/edit`} className="button-primary">Edit</Link>
+                  <Button variant="danger" onClick={event => deleteDream(event, dream.id)}>Delete</Button>
                 </td>
               </tr>
             );
