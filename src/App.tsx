@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
+import DreamsEditPage from './pages/DreamsEditPage';
+import DreamsNewPage from './pages/DreamsNewPage';
+import DreamsPage from './pages/DreamsPage';
+import DreamShowsPage from './pages/DreamsShowPage';
+
+import Nav from "react-bootstrap/Nav";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav className="flex-column">
+        <Link className="nav-link" to="/">Dreams</Link>
+        <Link className="nav-link" to="/dreams/new">New dream</Link>
+      </Nav>
+
+      <Routes>
+        <Route path="/" element={<DreamsPage />} />
+        <Route path="/dreams/new" element={<DreamsNewPage />} />
+        <Route path="/dreams/:id/edit" element={<DreamsEditPage />} />
+        <Route path="/dreams/:id/show" element={<DreamShowsPage />} />
+      </Routes>
     </div>
   );
 }
