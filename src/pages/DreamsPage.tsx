@@ -1,5 +1,6 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Table from "react-bootstrap/Table";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -11,6 +12,16 @@ import { useDispatch } from "react-redux";
 export default function DreamsPage() {
   const dreams = useSelector<RootState, Dream[]>(state => state.dreamReducer.dreams);
   const dispatch = useDispatch();
+
+  // TODO: Extract pagination
+  const limit = 5;
+  const [offset, setOffset] = useState(0);
+  const totalPages = Array(Math.ceil(dreams.length / limit)).fill(0).map((_, i) => i);
+  const [paginatedDreams, setPaginatedDreams] = useState<Dream[]>([]);
+
+  useEffect(() => {
+    setPaginatedDreams(dreams.slice(offset, offset + limit));
+  }, [offset, limit]);
 
   const deleteDream = (event: React.FormEvent<HTMLButtonElement>, id?: number) => {
     const isSure = window.confirm("Are you sure you want to delete this dream?");
@@ -33,7 +44,7 @@ export default function DreamsPage() {
           </tr>
         </thead>
         <tbody>
-          {dreams.map((dream, index) => {
+          {paginatedDreams.map((dream, index) => {
             return (
               <tr key={index}>
                 <td>{dream.id}</td>
@@ -50,6 +61,14 @@ export default function DreamsPage() {
           })}
         </tbody>
       </Table>
+
+      <ButtonGroup>
+        {totalPages.length > 1 && totalPages.map((page, index) => {
+          return (
+            <Button key={index} variant="secondary" onClick={() => setOffset(limit * page)}>{page + 1}</Button>
+          );
+        })}
+      </ButtonGroup>
     </div>
   );
 }
