@@ -13,7 +13,8 @@ export default function DreamsPage() {
   const dispatch = useDispatch();
 
   const deleteDream = (event: React.FormEvent<HTMLButtonElement>, id?: number) => {
-    if (!id) return;
+    const isSure = window.confirm("Are you sure you want to delete this dream?");
+    if (!id || !isSure) return;
     dispatch(remove({ id }));
   }
 
